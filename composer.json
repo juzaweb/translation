@@ -9,7 +9,8 @@
         },
         "juzaweb": {
             "name": "Translation",
-            "domain": "jutr"
+            "domain": "jutr",
+            "cms_min": "1.0.9"
         }
     },
     "autoload": {
