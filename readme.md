@@ -14,4 +14,6 @@ Translate provides in-browser editing of [Juzaweb translation](https://juzaweb.c
 ## Images
 ![Plugin and theme list](https://i.imgur.com/8ZQil9t.png)
 
-![Translation theme/plugin](https://i.imgur.com/IuW9BtR.png)
+![Language theme/plugin](https://i.imgur.com/IuW9BtR.png)
+
+![Translate theme/pluign](https://i.imgur.com/EnD0j4c.png)
