@@ -29,7 +29,7 @@ class LocaleController extends BackendController
 
         $this->addBreadcrumb(
             [
-                'title' => trans('juzaweb::app.translations'),
+                'title' => trans('cms::app.translations'),
                 'url' => route('admin.translations.index'),
             ]
         );
@@ -167,12 +167,11 @@ class LocaleController extends BackendController
         );
 
         $output = var_export($output, true);
-        $output = str_replace(
+
+        return str_replace(
             ['array (', ')', '&#40', '&#41'],
             ['[',']','(',')'],
             $output
         );
-
-        return $output;
     }
 }

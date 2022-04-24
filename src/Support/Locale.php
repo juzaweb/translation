@@ -11,8 +11,8 @@
 namespace Juzaweb\Translation\Support;
 
 use Illuminate\Support\Collection;
-use Juzaweb\Facades\Plugin;
-use Juzaweb\Facades\Theme;
+use Juzaweb\CMS\Facades\Plugin;
+use Juzaweb\CMS\Facades\Theme;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -21,13 +21,15 @@ class Locale
     public function all()
     {
         $result = [];
-        $result['core'] = collect([
-            'title' => 'Core Juzaweb',
-            'key' => 'core',
-            'type' => 'core',
-            'path' => 'vendor/juzaweb/cms/src/resources/lang',
-            'publish_path' => 'lang/vendor/juzaweb',
-        ]);
+        $result['core'] = collect(
+            [
+                'title' => 'Core Juzaweb',
+                'key' => 'core',
+                'type' => 'core',
+                'path' => 'modules/Backend/resources/lang',
+                'publish_path' => 'lang/vendor/juzaweb',
+            ]
+        );
 
         $result = array_merge($result, $this->getLocalePlugins());
         $result = array_merge($result, $this->getLocaleThemes());
@@ -41,13 +43,15 @@ class Locale
         $plugins = Plugin::all();
         foreach ($plugins as $plugin) {
             $snakeName = namespace_snakename($plugin->get('name'));
-            $result[$snakeName] = collect([
-                'title' => $plugin->getDisplayName(),
-                'key' => $snakeName,
-                'type' => 'plugin',
-                'path' => 'plugins/' . $plugin->get('name') . '/src/resources/lang',
-                'publish_path' => 'lang/vendor/' . $snakeName,
-            ]);
+            $result[$snakeName] = collect(
+                [
+                    'title' => $plugin->getDisplayName(),
+                    'key' => $snakeName,
+                    'type' => 'plugin',
+                    'path' => $plugin->getPath() . '/src/resources/lang',
+                    'publish_path' => 'lang/vendor/'.$snakeName,
+                ]
+            );
         }
 
         return $result;
@@ -58,13 +62,15 @@ class Locale
         $result = [];
         $themes = Theme::all();
         foreach ($themes as $theme) {
-            $result['theme_' . $theme->get('name')] = collect([
-                'title' => $theme->get('title'),
-                'key' => 'theme_' . $theme->get('name'),
-                'type' => 'theme',
-                'path' => 'themes/' . $theme->get('name') . '/lang',
-                'publish_path' => 'lang/vendor/theme_' . $theme->get('name'),
-            ]);
+            $result['theme_'.$theme->get('name')] = collect(
+                [
+                    'title' => $theme->get('title'),
+                    'key' => 'theme_'.$theme->get('name'),
+                    'type' => 'theme',
+                    'path' => 'themes/'.$theme->get('name').'/lang',
+                    'publish_path' => 'lang/vendor/theme_'.$theme->get('name'),
+                ]
+            );
         }
 
         return $result;
@@ -89,18 +95,23 @@ class Locale
          * @var SplFileInfo[] $files
          */
         $files = File::files($this->originPath($key, 'en'));
-        $files = collect($files)->filter(function (SplFileInfo $item) {
-            return $item->getExtension() == 'php';
-        })->values()->toArray();
+        $files = collect($files)
+            ->filter(
+                function (SplFileInfo $item) {
+                    return $item->getExtension() == 'php';
+                }
+            )
+            ->values()
+            ->toArray();
 
         $result = [];
         foreach ($files as $file) {
             $trans = [];
-            $lang = require ($file->getRealPath());
-            $langPublish = $this->publishPath($key, $locale . '/' . $file->getFilename());
+            $lang = require($file->getRealPath());
+            $langPublish = $this->publishPath($key, $locale.'/'.$file->getFilename());
 
             if (file_exists($langPublish)) {
-                $langPublish = require ($langPublish);
+                $langPublish = require($langPublish);
                 foreach ($langPublish as $langKey => $langVal) {
                     $trans[$langKey] = $langVal;
                 }
@@ -128,9 +139,11 @@ class Locale
         }
 
         $folders = File::directories($folderPath);
-        $folders = collect($folders)->map(function ($item) {
-            return basename($item);
-        })->values()->toArray();
+        $folders = collect($folders)->map(
+            function ($item) {
+                return basename($item);
+            }
+        )->values()->toArray();
 
         return collect(config('locales'))
             ->whereIn('code', $folders)
@@ -152,9 +165,12 @@ class Locale
         }
 
         $folders = File::directories($folderPath);
-        $folders = collect($folders)->map(function ($item) {
-            return basename($item);
-        })->values()->toArray();
+        $folders = collect($folders)
+            ->map(
+                function ($item) {
+                    return basename($item);
+                }
+            )->values()->toArray();
 
         return collect(config('locales'))
             ->whereIn('code', $folders)
@@ -181,7 +197,7 @@ class Locale
             return $basePath;
         }
 
-        return $basePath . '/' . $path;
+        return $basePath.'/'.$path;
     }
 
     public function publishPath($key, $path = '')
@@ -193,7 +209,7 @@ class Locale
             return $basePath;
         }
 
-        return $basePath . '/' . $path;
+        return $basePath.'/'.$path;
     }
 
     /**
@@ -213,12 +229,12 @@ class Locale
     {
         foreach ($lang as $key => $item) {
             if (is_array($item)) {
-                $this->mapGroupKeys($item, $group .'.'. $key, $trans, $result);
+                $this->mapGroupKeys($item, $group.'.'.$key, $trans, $result);
             } else {
                 $result[] = [
-                    'key' => $group .'.'. $key,
+                    'key' => $group.'.'.$key,
                     'value' => $item,
-                    'trans' => $trans[$key] ?? $item
+                    'trans' => $trans[$key] ?? $item,
                 ];
             }
         }

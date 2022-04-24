@@ -24,7 +24,7 @@ class TranslationController extends BackendController
     public function index()
     {
         return view('jutr::translation.index', [
-            'title' => trans('juzaweb::app.translations'),
+            'title' => trans('cms::app.translations'),
         ]);
     }
 

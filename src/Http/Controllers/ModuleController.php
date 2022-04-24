@@ -19,17 +19,22 @@ class ModuleController extends BackendController
 {
     public function index($type)
     {
-        $this->addBreadcrumb([
-            'title' => trans('juzaweb::app.translations'),
-            'url' => route('admin.translations.index')
-        ]);
+        $this->addBreadcrumb(
+            [
+                'title' => trans('cms::app.translations'),
+                'url' => route('admin.translations.index')
+            ]
+        );
 
         $data = Locale::getByKey($type);
 
-        return view('jutr::translation.module', [
-            'title' => $data->get('title'),
-            'type' => $type
-        ]);
+        return view(
+            'jutr::translation.module',
+            [
+                'title' => $data->get('title'),
+                'type' => $type
+            ]
+        );
     }
 
     public function add(Request $request, $type)
@@ -38,22 +43,28 @@ class ModuleController extends BackendController
         $publishPath = Locale::publishPath($type, $locale);
 
         if (is_dir($publishPath)) {
-            return $this->error([
-                'message' => trans('juzaweb::app.language_already_exist')
-            ]);
+            return $this->error(
+                [
+                    'message' => trans('cms::app.language_already_exist')
+                ]
+            );
         }
 
         try {
             mkdir($publishPath);
         } catch (\Throwable $e) {
-            return $this->error([
-                'message' => $e->getMessage()
-            ]);
+            return $this->error(
+                [
+                    'message' => $e->getMessage()
+                ]
+            );
         }
 
-        return $this->success([
-            'message' => trans('juzaweb::app.add_language_successfull')
-        ]);
+        return $this->success(
+            [
+                'message' => trans('cms::app.add_language_successfull')
+            ]
+        );
     }
 
     public function getDataTable(Request $request, $type)
@@ -66,20 +77,24 @@ class ModuleController extends BackendController
         $result = Locale::allLanguage($type);
 
         if ($search) {
-            $result = collect($result)->filter(function ($item) use ($search) {
-                return (
-                    strpos($item['name'], $search) !== false ||
-                    strpos($item['code'], $search) !== false
-                );
-            });
+            $result = collect($result)->filter(
+                function ($item) use ($search) {
+                    return (
+                        strpos($item['name'], $search) !== false ||
+                        strpos($item['code'], $search) !== false
+                    );
+                }
+            );
         }
 
         $total = count($result);
         $items = ArrayPagination::make($result)->paginate($limit, $page)->values();
 
-        return response()->json([
-            'total' => $total,
-            'rows' => $items
-        ]);
+        return response()->json(
+            [
+                'total' => $total,
+                'rows' => $items
+            ]
+        );
     }
 }

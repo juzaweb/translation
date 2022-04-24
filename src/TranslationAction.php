@@ -17,7 +17,7 @@ class TranslationAction extends Action
         HookAction::registerAdminPage(
             'translations',
             [
-                'title' => trans('juzaweb::app.translations'),
+                'title' => trans('cms::app.translations'),
                 'menu' => [
                     'icon' => 'fa fa-language',
                     'position' => 90,
