@@ -1,10 +1,10 @@
-@extends('juzaweb::layouts.backend')
+@extends('cms::layouts.backend')
 
 @section('content')
     <div class="row mb-3">
         <div class="col-md-12">
             <div class="btn-group float-right">
-                <a href="javascript:void(0)" class="btn btn-primary" data-toggle="modal" data-target="#modal-add">{{ trans('juzaweb::app.add_language') }}</a>
+                <a href="javascript:void(0)" class="btn btn-primary" data-toggle="modal" data-target="#modal-add">{{ trans('cms::app.add_language') }}</a>
             </div>
         </div>
     </div>
@@ -15,9 +15,9 @@
                 <table class="table juzaweb-table">
                     <thead>
                         <tr>
-                            <th data-width="5%" data-field="code">{{ trans('juzaweb::app.language_code') }}</th>
-                            <th data-field="name">{{ trans('juzaweb::app.language') }}</th>
-                            <th data-width="20%" data-formatter="actions_formatter">{{ trans('juzaweb::app.actions') }}</th>
+                            <th data-width="5%" data-field="code">{{ trans('cms::app.language_code') }}</th>
+                            <th data-field="name">{{ trans('cms::app.language') }}</th>
+                            <th data-width="20%" data-formatter="actions_formatter">{{ trans('cms::app.actions') }}</th>
                         </tr>
                     </thead>
                 </table>
@@ -30,22 +30,22 @@
             <form method="post" action="{{ route('admin.translations.type.add', [$type]) }}" class="form-ajax">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modal-add-title">{{ trans('juzaweb::app.add_language') }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="{{ trans('juzaweb::app.close') }}">
+                        <h5 class="modal-title" id="modal-add-title">{{ trans('cms::app.add_language') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="{{ trans('cms::app.close') }}">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
 
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>{{ trans('juzaweb::app.language') }}</label>
-                            <select name="locale" class="load-locales" data-placeholder="--- {{ trans('juzaweb::app.language') }} ---"></select>
+                            <label>{{ trans('cms::app.language') }}</label>
+                            <select name="locale" class="load-locales" data-placeholder="--- {{ trans('cms::app.language') }} ---"></select>
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">{{ trans('juzaweb::app.add') }}</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('juzaweb::app.close') }}</button>
+                        <button type="submit" class="btn btn-primary">{{ trans('cms::app.add') }}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('cms::app.close') }}</button>
                     </div>
                 </div>
             </form>

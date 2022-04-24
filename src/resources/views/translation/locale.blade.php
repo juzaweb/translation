@@ -1,4 +1,4 @@
-@extends('juzaweb::layouts.backend')
+@extends('cms::layouts.backend')
 
 @section('content')
     <div class="row mb-2">
@@ -7,11 +7,11 @@
                 <div class="col-md-8">
                     <form method="get" class="form-inline" id="form-search">
                         <div class="form-group mb-2 mr-1">
-                            <label for="search" class="sr-only">@lang('juzaweb::app.search')</label>
-                            <input name="search" type="text" id="search" class="form-control" placeholder="@lang('juzaweb::app.search')" autocomplete="off">
+                            <label for="search" class="sr-only">@lang('cms::app.search')</label>
+                            <input name="search" type="text" id="search" class="form-control" placeholder="@lang('cms::app.search')" autocomplete="off">
                         </div>
 
-                        <button type="submit" class="btn btn-primary mb-2">@lang('juzaweb::app.search')</button>
+                        <button type="submit" class="btn btn-primary mb-2">@lang('cms::app.search')</button>
                     </form>
                 </div>
             </div>
@@ -20,8 +20,8 @@
                 <table class="table juzaweb-table">
                     <thead>
                         <tr>
-                            <th data-field="value" data-width="25%" data-sortable="true">{{ trans('juzaweb::app.origin') }}</th>
-                            <th data-width="25%" data-sortable="true" data-formatter="translate_formatter">{{ trans('juzaweb::app.your_value') }}</th>
+                            <th data-field="value" data-width="25%" data-sortable="true">{{ trans('cms::app.origin') }}</th>
+                            <th data-width="25%" data-sortable="true" data-formatter="translate_formatter">{{ trans('cms::app.your_value') }}</th>
                         </tr>
                     </thead>
                 </table>
