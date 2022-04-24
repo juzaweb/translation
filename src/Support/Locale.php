@@ -18,7 +18,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class Locale
 {
-    public function all()
+    public function all(): Collection
     {
         $result = [];
         $result['core'] = collect(
@@ -37,19 +37,21 @@ class Locale
         return collect($result);
     }
 
-    public function getLocalePlugins()
+    public function getLocalePlugins(): array
     {
         $result = [];
         $plugins = Plugin::all();
         foreach ($plugins as $plugin) {
-            $snakeName = namespace_snakename($plugin->get('name'));
+            $name = $plugin->get('name');
+            $snakeName = namespace_snakename($name);
+
             $result[$snakeName] = collect(
                 [
                     'title' => $plugin->getDisplayName(),
                     'key' => $snakeName,
                     'type' => 'plugin',
-                    'path' => $plugin->getPath() . '/src/resources/lang',
-                    'publish_path' => 'lang/vendor/'.$snakeName,
+                    'path' => $plugin->getPath('src/resources/lang'),
+                    'publish_path' => 'lang/plugins/'.$name,
                 ]
             );
         }
@@ -57,7 +59,7 @@ class Locale
         return $result;
     }
 
-    public function getLocaleThemes()
+    public function getLocaleThemes(): array
     {
         $result = [];
         $themes = Theme::all();
@@ -67,7 +69,7 @@ class Locale
                     'title' => $theme->get('title'),
                     'key' => 'theme_'.$theme->get('name'),
                     'type' => 'theme',
-                    'path' => 'themes/'.$theme->get('name').'/lang',
+                    'path' => base_path('themes/'.$theme->get('name').'/lang'),
                     'publish_path' => 'lang/vendor/theme_'.$theme->get('name'),
                 ]
             );
@@ -88,7 +90,7 @@ class Locale
      * @param string $locale
      * @return array
      */
-    public function getAllTrans($key, $locale)
+    public function getAllTrans(Collection|string $key, string $locale): array
     {
         $key = $this->parseVar($key);
         /**
@@ -130,10 +132,9 @@ class Locale
      * @param Collection|string $key
      * @return array
      */
-    public function allLanguageOrigin($key)
+    public function allLanguageOrigin(Collection|string $key): array
     {
         $folderPath = $this->originPath($key);
-
         if (!is_dir($folderPath)) {
             return [];
         }
@@ -156,7 +157,7 @@ class Locale
      * @param Collection|string $key
      * @return array
      */
-    public function allLanguagePublish($key)
+    public function allLanguagePublish(Collection|string $key): array
     {
         $folderPath = $this->publishPath($key);
 
@@ -183,15 +184,15 @@ class Locale
      * @param Collection|string $key
      * @return array
      */
-    public function allLanguage($key)
+    public function allLanguage(Collection|string $key): array
     {
         return array_merge($this->allLanguageOrigin($key), $this->allLanguagePublish($key));
     }
 
-    public function originPath($key, $path = '')
+    public function originPath($key, $path = ''): string
     {
         $key = $this->parseVar($key);
-        $basePath = base_path($key->get('path'));
+        $basePath = $key->get('path');
 
         if (empty($path)) {
             return $basePath;
@@ -200,7 +201,7 @@ class Locale
         return $basePath.'/'.$path;
     }
 
-    public function publishPath($key, $path = '')
+    public function publishPath($key, $path = ''): string
     {
         $key = $this->parseVar($key);
         $basePath = resource_path($key->get('publish_path'));
@@ -212,11 +213,7 @@ class Locale
         return $basePath.'/'.$path;
     }
 
-    /**
-     * @param Collection|string $key
-     * @return Collection
-     */
-    protected function parseVar($key)
+    protected function parseVar(Collection|string $key): string|Collection
     {
         if (is_a($key, Collection::class)) {
             return $key;
@@ -225,7 +222,7 @@ class Locale
         return $this->getByKey($key);
     }
 
-    protected function mapGroupKeys(array $lang, $group, $trans, &$result)
+    protected function mapGroupKeys(array $lang, $group, $trans, &$result): void
     {
         foreach ($lang as $key => $item) {
             if (is_array($item)) {

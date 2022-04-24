@@ -10,6 +10,8 @@
 
 namespace Juzaweb\Translation\Http\Controllers;
 
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Juzaweb\CMS\Support\ArrayPagination;
 use Juzaweb\Translation\Facades\Locale;
@@ -17,7 +19,7 @@ use Juzaweb\CMS\Http\Controllers\BackendController;
 
 class ModuleController extends BackendController
 {
-    public function index($type)
+    public function index($type): View
     {
         $this->addBreadcrumb(
             [
@@ -37,7 +39,7 @@ class ModuleController extends BackendController
         );
     }
 
-    public function add(Request $request, $type)
+    public function add(Request $request, $type): JsonResponse
     {
         $locale = $request->post('locale');
         $publishPath = Locale::publishPath($type, $locale);
@@ -67,7 +69,7 @@ class ModuleController extends BackendController
         );
     }
 
-    public function getDataTable(Request $request, $type)
+    public function getDataTable(Request $request, $type): JsonResponse
     {
         $search = $request->get('search');
         $offset = $request->get('offset', 0);
@@ -80,8 +82,8 @@ class ModuleController extends BackendController
             $result = collect($result)->filter(
                 function ($item) use ($search) {
                     return (
-                        strpos($item['name'], $search) !== false ||
-                        strpos($item['code'], $search) !== false
+                        str_contains($item['name'], $search) ||
+                        str_contains($item['code'], $search)
                     );
                 }
             );
