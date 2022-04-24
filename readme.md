@@ -2,7 +2,7 @@
 Translate provides in-browser editing of [Juzaweb translation](https://juzaweb.com/plugin/translation) files and integration with automatic translation services
 
 ## Install
-- Go to Admin -> Plugins -> Add new
+- Go to `Admin -> Plugins -> Add new`
 - Search and add plugin translation
 - Activate plugin
 
