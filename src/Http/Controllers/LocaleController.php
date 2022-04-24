@@ -2,7 +2,7 @@
 /**
  * JUZAWEB CMS - The Best CMS for Laravel Project
  *
- * @package    juzaweb/laravel-cms
+ * @package    juzaweb/juzacms
  * @author     The Anh Dang <dangtheanh16@gmail.com>
  * @link       https://juzaweb.com/cms
  * @license    MIT
@@ -13,36 +13,43 @@ namespace Juzaweb\Translation\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Juzaweb\Translation\Facades\Locale;
-use Juzaweb\Http\Controllers\BackendController;
-use Juzaweb\Support\ArrayPagination;
+use Juzaweb\CMS\Http\Controllers\BackendController;
+use Juzaweb\CMS\Support\ArrayPagination;
 
 class LocaleController extends BackendController
 {
     public function index($type, $locale)
     {
         $data = Locale::getByKey($type);
-        $language = config('locales.' . $locale . '.name');
+        $language = config('locales.'.$locale.'.name');
 
         if (empty($data)) {
             return abort(404);
         }
 
-        $this->addBreadcrumb([
-            'title' => trans('juzaweb::app.translations'),
-            'url' => route('admin.translations.index')
-        ]);
+        $this->addBreadcrumb(
+            [
+                'title' => trans('juzaweb::app.translations'),
+                'url' => route('admin.translations.index'),
+            ]
+        );
 
-        $this->addBreadcrumb([
-            'title' => $data->get('title'),
-            'url' => route('admin.translations.type', [$type])
-        ]);
+        $this->addBreadcrumb(
+            [
+                'title' => $data->get('title'),
+                'url' => route('admin.translations.type', [$type]),
+            ]
+        );
 
-        return view('jutr::translation.locale', [
-            'title' => $language,
-            'data' => $data,
-            'type' => $type,
-            'locale' => $locale,
-        ]);
+        return view(
+            'jutr::translation.locale',
+            [
+                'title' => $language,
+                'data' => $data,
+                'type' => $type,
+                'locale' => $locale,
+            ]
+        );
     }
 
     public function save(Request $request, $type, $locale)
@@ -62,14 +69,16 @@ class LocaleController extends BackendController
             try {
                 File::makeDirectory($folderPath, 0775, true);
             } catch (\Throwable $e) {
-                return $this->error([
-                    'message' => $e->getMessage(),
-                ]);
+                return $this->error(
+                    [
+                        'message' => $e->getMessage(),
+                    ]
+                );
             }
         }
 
         if (file_exists($filePath)) {
-            $lang = require ($filePath);
+            $lang = require($filePath);
         }
 
         $keys = collect($keys)->values()->toArray();
@@ -83,14 +92,18 @@ class LocaleController extends BackendController
         try {
             File::put($filePath, $fileContent);
         } catch (\Throwable $e) {
-            return $this->error([
-                'message' => $e->getMessage(),
-            ]);
+            return $this->error(
+                [
+                    'message' => $e->getMessage(),
+                ]
+            );
         }
 
-        return $this->success([
-            'message' => 'ok',
-        ]);
+        return $this->success(
+            [
+                'message' => 'ok',
+            ]
+        );
     }
 
     public function getDataTable(Request $request, $type, $locale)
@@ -103,21 +116,26 @@ class LocaleController extends BackendController
         $result = Locale::getAllTrans($type, $locale);
 
         if ($search) {
-            $result = collect($result)->filter(function ($item) use ($search) {
-                return (
-                    strpos($item['key'], $search) !== false ||
-                    strpos($item['value'], $search) !== false
+            $result = collect($result)
+                ->filter(
+                    function ($item) use ($search) {
+                        return (
+                            strpos($item['key'], $search) !== false ||
+                            strpos($item['value'], $search) !== false
+                        );
+                    }
                 );
-            });
         }
 
         $total = count($result);
         $items = ArrayPagination::make($result)->paginate($limit, $page)->values();
 
-        return response()->json([
-            'total' => $total,
-            'rows' => $items
-        ]);
+        return response()->json(
+            [
+                'total' => $total,
+                'rows' => $items,
+            ]
+        );
     }
 
     protected function setKeyLang($keys, $value, $lang)
@@ -127,6 +145,7 @@ class LocaleController extends BackendController
                 unset($keys[$index]);
                 $keys = collect($keys)->values()->toArray();
                 $lang[$key] = $this->setKeyLang($keys, $value, $lang[$key] ?? []);
+
                 return $lang;
             } else {
                 $lang[$key] = $value;
@@ -136,13 +155,16 @@ class LocaleController extends BackendController
         return $lang;
     }
 
-    protected function varExportShort($var) {
+    protected function varExportShort($var)
+    {
         $output = json_decode(
             str_replace(
                 ['(', ')'],
                 ['&#40', '&#41'],
                 json_encode($var)
-            ), true);
+            ),
+            true
+        );
 
         $output = var_export($output, true);
         $output = str_replace(

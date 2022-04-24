@@ -15,8 +15,8 @@
 namespace Juzaweb\Translation\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Juzaweb\Http\Controllers\BackendController;
-use Juzaweb\Support\ArrayPagination;
+use Juzaweb\CMS\Http\Controllers\BackendController;
+use Juzaweb\CMS\Support\ArrayPagination;
 use Juzaweb\Translation\Facades\Locale;
 
 class TranslationController extends BackendController
@@ -24,7 +24,7 @@ class TranslationController extends BackendController
     public function index()
     {
         return view('jutr::translation.index', [
-            'title' => trans('juzaweb::app.translations')
+            'title' => trans('juzaweb::app.translations'),
         ]);
     }
 

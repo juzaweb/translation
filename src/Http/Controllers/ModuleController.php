@@ -11,9 +11,9 @@
 namespace Juzaweb\Translation\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Juzaweb\Support\ArrayPagination;
+use Juzaweb\CMS\Support\ArrayPagination;
 use Juzaweb\Translation\Facades\Locale;
-use Juzaweb\Http\Controllers\BackendController;
+use Juzaweb\CMS\Http\Controllers\BackendController;
 
 class ModuleController extends BackendController
 {
