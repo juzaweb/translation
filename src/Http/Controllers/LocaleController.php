@@ -62,7 +62,7 @@ class LocaleController extends BackendController
         unset($keys[0]);
 
         $lang = [];
-        $folderPath = resource_path($data['publish_path'] . '/' . $locale);
+        $folderPath = $data['publish_path'] . '/' . $locale;
         $filePath = $folderPath . '/' . $file;
 
         if (!is_dir($folderPath)) {
@@ -120,8 +120,8 @@ class LocaleController extends BackendController
                 ->filter(
                     function ($item) use ($search) {
                         return (
-                            strpos($item['key'], $search) !== false ||
-                            strpos($item['value'], $search) !== false
+                            str_contains($item['key'], $search) ||
+                            str_contains($item['value'], $search)
                         );
                     }
                 );

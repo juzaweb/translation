@@ -2,7 +2,7 @@
 /**
  * JUZAWEB CMS - The Best CMS for Laravel Project
  *
- * @package    juzaweb/laravel-cms
+ * @package    juzaweb/juzacms
  * @author     The Anh Dang <dangtheanh16@gmail.com>
  * @link       https://juzaweb.com/cms
  * @license    MIT
@@ -23,11 +23,11 @@ class Locale
         $result = [];
         $result['core'] = collect(
             [
-                'title' => 'Core Juzaweb',
+                'title' => 'CMS',
                 'key' => 'core',
                 'type' => 'core',
-                'path' => 'modules/Backend/resources/lang',
-                'publish_path' => 'lang/vendor/juzaweb',
+                'path' => base_path('modules/Backend/resources/lang'),
+                'publish_path' => resource_path('lang/vendor/cms'),
             ]
         );
 
@@ -51,7 +51,7 @@ class Locale
                     'key' => $snakeName,
                     'type' => 'plugin',
                     'path' => $plugin->getPath('src/resources/lang'),
-                    'publish_path' => 'lang/plugins/'.$name,
+                    'publish_path' => resource_path("lang/plugins/{$name}"),
                 ]
             );
         }
@@ -64,13 +64,14 @@ class Locale
         $result = [];
         $themes = Theme::all();
         foreach ($themes as $theme) {
-            $result['theme_'.$theme->get('name')] = collect(
+            $name = $theme->get('name');
+            $result["theme_{$name}"] = collect(
                 [
                     'title' => $theme->get('title'),
-                    'key' => 'theme_'.$theme->get('name'),
+                    'key' => "theme_{$name}",
                     'type' => 'theme',
-                    'path' => base_path('themes/'.$theme->get('name').'/lang'),
-                    'publish_path' => 'lang/vendor/theme_'.$theme->get('name'),
+                    'path' => base_path("themes/{$name}/lang"),
+                    'publish_path' => resource_path("lang/themes/{$name}"),
                 ]
             );
         }
@@ -93,9 +94,6 @@ class Locale
     public function getAllTrans(Collection|string $key, string $locale): array
     {
         $key = $this->parseVar($key);
-        /**
-         * @var SplFileInfo[] $files
-         */
         $files = File::files($this->originPath($key, 'en'));
         $files = collect($files)
             ->filter(
@@ -189,7 +187,7 @@ class Locale
         return array_merge($this->allLanguageOrigin($key), $this->allLanguagePublish($key));
     }
 
-    public function originPath($key, $path = ''): string
+    public function originPath(Collection|string $key, string $path = ''): string
     {
         $key = $this->parseVar($key);
         $basePath = $key->get('path');
@@ -204,7 +202,7 @@ class Locale
     public function publishPath($key, $path = ''): string
     {
         $key = $this->parseVar($key);
-        $basePath = resource_path($key->get('publish_path'));
+        $basePath = $key->get('publish_path');
 
         if (empty($path)) {
             return $basePath;

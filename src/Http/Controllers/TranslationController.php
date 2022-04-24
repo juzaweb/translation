@@ -6,10 +6,6 @@
  * @author     The Anh Dang <dangtheanh16@gmail.com>
  * @link       https://juzaweb.com/cms
  * @license    MIT
- *
- * Created by JUZAWEB.
- * Date: 8/15/2021
- * Time: 5:23 PM
  */
 
 namespace Juzaweb\Translation\Http\Controllers;
@@ -23,9 +19,12 @@ class TranslationController extends BackendController
 {
     public function index()
     {
-        return view('jutr::translation.index', [
-            'title' => trans('cms::app.translations'),
-        ]);
+        return view(
+            'jutr::translation.index',
+            [
+                'title' => trans('cms::app.translations'),
+            ]
+        );
     }
 
     public function getDataTable(Request $request)
@@ -38,19 +37,22 @@ class TranslationController extends BackendController
         $result = Locale::all();
 
         if ($search) {
-            $result = collect($result)->filter(function ($item) use ($search) {
-                return (
-                    strpos($item['title'], $search) !== false
+            $result = collect($result)
+                ->filter(
+                    function ($item) use ($search) {
+                        return (str_contains($item['title'], $search));
+                    }
                 );
-            });
         }
 
         $total = count($result);
         $items = ArrayPagination::make($result)->paginate($limit, $page)->values();
 
-        return response()->json([
-            'total' => $total,
-            'rows' => $items
-        ]);
+        return response()->json(
+            [
+                'total' => $total,
+                'rows' => $items
+            ]
+        );
     }
 }
