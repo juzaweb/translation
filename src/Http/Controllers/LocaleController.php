@@ -91,6 +91,10 @@ class LocaleController extends BackendController
 
         try {
             File::put($filePath, $fileContent);
+
+            /*if (function_exists('opcache_reset')) {
+                opcache_reset();
+            }*/
         } catch (\Throwable $e) {
             return $this->error(
                 [
