@@ -2,8 +2,8 @@
 
 namespace Juzaweb\Translation;
 
-use Juzaweb\Backend\Facades\HookAction;
 use Juzaweb\CMS\Abstracts\Action;
+use Juzaweb\CMS\Facades\HookAction;
 
 class TranslationAction extends Action
 {
