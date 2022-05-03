@@ -14,9 +14,10 @@ use Illuminate\Support\Collection;
 use Juzaweb\CMS\Facades\Plugin;
 use Juzaweb\CMS\Facades\Theme;
 use Illuminate\Support\Facades\File;
+use Juzaweb\Translation\Contracts\TranslationContract;
 use Symfony\Component\Finder\SplFileInfo;
 
-class Locale
+class Locale implements TranslationContract
 {
     public function all(): Collection
     {
@@ -79,7 +80,7 @@ class Locale
         return $result;
     }
 
-    public function getByKey(string $key)
+    public function getByKey(string $key): mixed
     {
         return $this->all()->get($key, []);
     }
