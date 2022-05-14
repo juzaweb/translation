@@ -12,7 +12,7 @@ namespace Juzaweb\Translation\Support;
 
 use Illuminate\Support\Collection;
 use Juzaweb\CMS\Facades\Plugin;
-use Juzaweb\CMS\Facades\Theme;
+use Juzaweb\CMS\Facades\ThemeLoader;
 use Illuminate\Support\Facades\File;
 use Juzaweb\Translation\Contracts\TranslationContract;
 use Symfony\Component\Finder\SplFileInfo;
@@ -63,7 +63,7 @@ class Locale implements TranslationContract
     public function getLocaleThemes(): array
     {
         $result = [];
-        $themes = Theme::all();
+        $themes = ThemeLoader::all();
         foreach ($themes as $theme) {
             $name = $theme->get('name');
             $result["theme_{$name}"] = collect(
