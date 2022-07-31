@@ -13,6 +13,7 @@ namespace Juzaweb\Translation\Http\Controllers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Juzaweb\CMS\Support\ArrayPagination;
 use Juzaweb\Translation\Facades\Locale;
 use Juzaweb\CMS\Http\Controllers\BackendController;
@@ -53,7 +54,7 @@ class ModuleController extends BackendController
         }
 
         try {
-            mkdir($publishPath);
+            File::makeDirectory($publishPath, 0755, true);
         } catch (\Throwable $e) {
             return $this->error(
                 [
