@@ -11,7 +11,7 @@
 namespace Juzaweb\Translation\Contracts;
 
 use Illuminate\Support\Collection;
-use Juzaweb\CMS\Models\Translation;
+use Juzaweb\Translation\Models\Translation;
 use Juzaweb\Translation\Support\Translations\TranslationExporter;
 use Juzaweb\Translation\Support\Translations\TranslationImporter;
 use Juzaweb\Translation\Support\Translations\TranslationLocale;

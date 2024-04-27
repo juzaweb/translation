@@ -11,6 +11,7 @@ use Juzaweb\Translation\Commands;
 use Juzaweb\Translation\Contracts\TranslationContract;
 use Juzaweb\Translation\Contracts\TranslationFinder as TranslationFinderContract;
 use Juzaweb\Translation\Contracts\TranslationManager as TranslationManagerContract;
+use Juzaweb\Translation\Models\LanguageLine;
 use Juzaweb\Translation\Support\Locale;
 use Juzaweb\Translation\Support\TranslationManager;
 use Juzaweb\Translation\Support\Translations\TranslationFinder;
@@ -32,7 +33,7 @@ class TranslationServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        $this->app['config']->set('translation-loader.model', \Juzaweb\Translation\Models\LanguageLine::class);
+        $this->app['config']->set('translation-loader.model', LanguageLine::class);
 
         $this->app->register(RouteServiceProvider::class);
 

@@ -14,8 +14,8 @@ use Closure;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Juzaweb\CMS\Contracts\GoogleTranslate;
-use Juzaweb\CMS\Models\Translation;
 use Juzaweb\Translation\Contracts\TranslationManager;
+use Juzaweb\Translation\Models\Translation;
 
 class TranslationTranslate
 {
