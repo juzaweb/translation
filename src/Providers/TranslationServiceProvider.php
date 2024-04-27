@@ -17,6 +17,8 @@ class TranslationServiceProvider extends ServiceProvider
 
     public function register(): void
     {
+        $this->app['config']->set('translation-loader.model', \Juzaweb\Translation\Models\LanguageLine::class);
+
         $this->app->register(RouteServiceProvider::class);
 
         $this->app->singleton(

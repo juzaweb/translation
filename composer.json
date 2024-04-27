@@ -18,5 +18,9 @@
         "psr-4": {
             "Juzaweb\\Translation\\": "src/"
         }
+    },
+    "require": {
+        "php": "^8.0|^8.1",
+        "juzaweb/laravel-translation-loader": "^2.0"
     }
 }
