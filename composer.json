@@ -9,7 +9,7 @@
         },
         "juzaweb": {
             "name": "Translation",
-            "domain": "jutr",
+            "domain": "translation",
             "version": "1.0.2",
             "cms_min": "3.0"
         }

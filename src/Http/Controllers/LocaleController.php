@@ -30,7 +30,7 @@ class LocaleController extends BaseTranslationController
         $language = config("locales.{$locale}.name");
 
         if (empty($data)) {
-            return abort(404);
+            abort(404);
         }
 
         $this->addBreadcrumb(

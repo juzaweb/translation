@@ -12,8 +12,6 @@ class TranslationServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'translation');
-
         ActionRegister::register(TranslationAction::class);
     }
 
