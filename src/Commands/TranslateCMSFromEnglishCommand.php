@@ -10,7 +10,7 @@
 
 namespace Juzaweb\Translation\Commands;
 
-use Juzaweb\CMS\Contracts\TranslationManager;
+use Juzaweb\Translation\Contracts\TranslationManager;
 use Symfony\Component\Console\Input\InputOption;
 
 class TranslateCMSFromEnglishCommand extends TranslationCommand

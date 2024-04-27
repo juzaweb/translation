@@ -11,7 +11,7 @@
 namespace Juzaweb\Translation\Commands\Themes;
 
 use Illuminate\Console\Command;
-use Juzaweb\CMS\Contracts\TranslationManager;
+use Juzaweb\Translation\Contracts\TranslationManager;
 use Symfony\Component\Console\Input\InputArgument;
 
 class ExportTranslationCommand extends Command
