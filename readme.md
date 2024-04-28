@@ -1,5 +1,8 @@
 ## About
-Translate provides in-browser editing of [Juzaweb translation](https://juzaweb.com/plugin/translation) files and integration with automatic translation services
+Translate provides in-browser editing of [Juzaweb translation](https://juzaweb.com/plugin/translation) files and integration with automatic translation services.
+
+[![Total Downloads](https://img.shields.io/packagist/dt/juzaweb/translation.svg?style=social)](https://packagist.org/packages/juzaweb/translation)
+[![GitHub Repo stars](https://img.shields.io/github/stars/juzaweb/translation?style=social)](https://github.com/juzaweb/translation)
 
 ## Install
 - Go to `Admin -> Plugins -> Add new`
@@ -53,8 +56,6 @@ php artisan plugin:export-translation {plugin-name} {language}
 
 - Multiple language support for your Theme...
 If you ever struggled to support multiple languages for your website. Juzaweb CMS supports you with a translation tool for faster and easier translate.
-
-[auto_menu]
 
 ### Import translation
 Find and create translation in your Theme to `jw_translations` table

@@ -1,6 +1,7 @@
 {
     "name": "juzaweb/translation",
     "type": "juzaweb-plugin",
+    "license": "GPL-2.0",
     "description": "Translation theme and plugin for Juzaweb cms",
     "extra": {
         "juzaweb": {
