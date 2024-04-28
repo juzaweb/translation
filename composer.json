@@ -1,17 +1,16 @@
 {
     "name": "juzaweb/translation",
+    "type": "juzaweb-plugin",
     "description": "Translation theme and plugin for Juzaweb cms",
     "extra": {
-        "laravel": {
-            "providers": [
-                "Juzaweb\\Translation\\Providers\\TranslationServiceProvider"
-            ]
-        },
         "juzaweb": {
             "name": "Translation",
             "domain": "translation",
             "version": "1.0.2",
-            "cms_min": "3.0"
+            "cms_min": "3.0",
+            "providers": [
+                "Juzaweb\\Translation\\Providers\\TranslationServiceProvider"
+            ]
         }
     },
     "autoload": {
@@ -21,5 +20,9 @@
     },
     "require": {
         "php": "^8.0|^8.1"
+    },
+    "require-dev": {
+        "juzaweb/modules": "^1.0",
+        "juzaweb/dev-tool": "^1.0"
     }
 }
