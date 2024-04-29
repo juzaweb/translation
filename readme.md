@@ -10,9 +10,12 @@ Translate provides in-browser editing of [Juzaweb translation](https://juzaweb.c
 - Activate plugin
 
 ## Features
-- Built-in translation editor within admin
-- Create and update language files directly in your theme or plugin
-- Protected language directory for saving custom translations
+- [x] Built-in translation editor within admin
+- [x] Create and update language files directly in your theme or plugin
+- [x] Protected language directory for saving custom translations
+- [x] Automatic translation themes/plugins by Google Translate
+- [x] Import/export translation themes/plugins
+- [ ] Command Find text missing translation in theme or plugin
 
 ## Usage
 - Multiple language support for your Plugin... 
